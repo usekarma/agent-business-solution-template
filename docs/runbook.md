@@ -1,39 +1,15 @@
 # Runbook
 
-## Service purpose
+## Template example
 
-What business capability does this service provide?
+This repository has no running service. Reproduce its behavior with `make check`. No cloud resources, persistence, on-call rotation, deployment, or rollback are configured.
 
-## Health signals
+## Before deploying a real project
 
-- Availability:
-- Latency:
-- Error rate:
-- Queue/backlog (if applicable):
-- Dependency health:
+Supply service purpose, business owner, technical owner, on-call contact, dependency map, dashboards, and source/deployment identifiers.
 
-## Common failures
+Define health checks that test readiness, workload and SLO signals, latency/error/backlog thresholds, alert routing, diagnosis commands, and escalation paths. Document restart behavior and in-flight work.
 
-### Dependency unavailable
+Provide tested procedures for dependency outage, retry exhaustion, duplicate work, partial writes, overload, authentication failure, and data repair where relevant. State safe preconditions and destructive steps requiring authorization.
 
-Symptoms:
-
-Diagnosis:
-
-Safe recovery:
-
-### Repeated/duplicate work
-
-Symptoms:
-
-Diagnosis:
-
-Safe recovery:
-
-## Rollback
-
-Describe the safe rollback procedure.
-
-## Data repair / replay
-
-Describe how to replay or repair work without duplicating business effects.
+Document rollback compatibility, trigger, procedure, validation, and observation window. Record restore/replay evidence, RPO/RTO, retention, and cost limits. Keep secrets and customer data out of runbook examples.

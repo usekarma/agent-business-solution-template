@@ -54,3 +54,14 @@ Define measurable success, for example:
 - 99% of requests complete within N seconds
 - reconciliation mismatch rate below X%
 - zero duplicate side effects under retry
+
+## Discovery and experiment
+
+- Hypothesis and smallest stakeholder demo:
+- Current baseline and measurable target:
+- Assumptions with validation owner and deadline:
+- Prototype decision: iterate / stop / harden:
+- Data classification and permitted synthetic fixtures:
+- Production owner and release decision maker:
+
+Use `specs/` for detailed contracts and `docs/prototype-review.md` for observed feedback.

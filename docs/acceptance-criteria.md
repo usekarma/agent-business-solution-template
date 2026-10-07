@@ -1,31 +1,7 @@
-# Acceptance Criteria
+# Acceptance and quality criteria
 
-Replace these examples with executable project criteria.
+Business acceptance lives in `specs/*.md` and `specs/acceptance.json`. The included five IDs are worked examples; replace them with real project behavior. The gate requires unique IDs, existing specs containing each ID, and collected tests for every mapping. Pytest must then pass.
 
-## Functional
+Engineering gates: format, lint, strict types, behavior tests, minimum 90% branch coverage of application code, secret scan, Bandit, and live dependency audit. The secret scanner detects selected credential patterns; it is not a complete data-loss prevention system.
 
-- [ ] Given a valid request, the system produces the expected business result.
-- [ ] Invalid input is rejected with a clear error and no partial side effect.
-- [ ] Duplicate processing does not create duplicate business side effects.
-
-## Reliability
-
-- [ ] External calls have explicit timeouts.
-- [ ] Transient failures are retried only when safe.
-- [ ] Permanent failures are surfaced and diagnosable.
-
-## Observability
-
-- [ ] Important operations emit structured logs.
-- [ ] A stable request/correlation identifier can trace one operation end-to-end.
-- [ ] Failure state is visible without inspecting source code.
-
-## Security
-
-- [ ] No secrets are committed to the repository.
-- [ ] Inputs are validated at trust boundaries.
-- [ ] Permissions follow least privilege.
-
-## Performance
-
-- [ ] Define expected workload and acceptable latency/resource usage.
+Production acceptance is separate: `docs/readiness.json` must reference substantive repository evidence and named owners. Human review must establish that the evidence is true, current, and sufficient. Automated checks cannot certify a release.

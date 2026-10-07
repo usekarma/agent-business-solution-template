@@ -1,34 +1,7 @@
 # Architecture
 
-## Context
+The starter has a pure `WorkRequest` domain boundary and `calculate_result` service, with no external I/O. Bounded input and immutable request state make the example easy to reason about.
 
-Describe the system boundary and neighboring systems.
+Repository quality infrastructure is separate: specifications map acceptance IDs to pytest node IDs; a gate validates that mapping and performs a narrow secret scan; the check runner invokes formatting, lint, types, behavioral tests, security checks, and vulnerability audit. Production readiness checks evidence documents separately.
 
-## Components
-
-Document each component and its responsibility.
-
-## Data flow
-
-Document the happy path and important failure paths.
-
-## State and idempotency
-
-Where is business state stored? What makes repeated requests safe?
-
-## Failure model
-
-For each external dependency, document:
-
-- timeout
-- retry policy
-- permanent failure behavior
-- recovery strategy
-
-## Observability
-
-Document logs, metrics, traces, dashboards, and alerts.
-
-## Security
-
-Document authentication, authorization, secrets, network boundaries, and sensitive data handling.
+For your project, document neighboring systems, component responsibilities, data flow, state ownership, trust boundaries, timeout budgets, retry/idempotency semantics, partial failure recovery, resource limits, observability, cost, and deployment/rollback constraints. Start with the simplest deployable boundary and justify distribution.

@@ -1,16 +1,11 @@
-.PHONY: bootstrap test lint typecheck check
-
+.PHONY: bootstrap check test production lock
 bootstrap:
 	./scripts/bootstrap.sh
-
-test:
-	./scripts/test.sh
-
-lint:
-	.venv/bin/python -m ruff check .
-
-typecheck:
-	.venv/bin/python -m mypy src
-
 check:
 	./scripts/check.sh
+test:
+	./scripts/test.sh
+production: check
+	.venv/bin/python scripts/gates.py --production
+lock:
+	.venv/bin/python -m piptools compile --generate-hashes --output-file requirements-dev.lock requirements-dev.in

@@ -1,107 +1,76 @@
-# Agent Business Solution Template
+# Agent Business Solution Template v2
 
-A practical starter repository for using VS Code coding agents to turn a business problem into a tested, reviewable software solution.
+Turn an ambiguous business problem into a verified software solution using AI coding agents and human engineering judgment.
 
-## What this template optimizes for
+Inspired by the business-facing engineering principles discussed in the NextEra role: clarify outcomes, prototype with stakeholders, anticipate edge cases, and own secure, operable delivery. This is an independent template, not a NextEra product or endorsement.
 
-- Business requirements before implementation
-- Small, reviewable changes
-- Executable acceptance criteria
-- Agent-friendly commands
-- Clear architecture boundaries
-- Production-minded testing and review
-- Safe defaults around cloud/infrastructure actions
+## Start here
 
-## Start a new project
+1. Click **Use this template** on GitHub and create your project.
+2. Fill in `PROJECT_BRIEF.md`: user, current process, measurable benefit, constraints, and assumptions.
+3. Replace the worked example in `specs/work-request.md` and `specs/acceptance.json` with your behavior contract and test mappings.
+4. Ask **Architect** to challenge assumptions and propose the smallest useful experiment.
+5. Ask **Builder** for one vertical slice. Demo it to the stakeholder; record learning in `docs/prototype-review.md`.
+6. Ask **Verifier**, **Reviewer**, **Security**, and **Operations** to evaluate the evidence in separate review passes.
+7. Harden the validated idea using `docs/prototype-to-production.md`. Complete `docs/readiness.json` before claiming production readiness.
 
-1. Copy this repository.
-2. Replace the placeholders in `PROJECT_BRIEF.md`.
-3. Fill in `docs/acceptance-criteria.md`.
-4. Open the repository root in VS Code.
-5. Start with the **Architect** agent and ask:
+AI accelerates research, implementation, and review. Passing deterministic checks and observed behavior establish evidence; an agent's confidence does not.
 
-   > Read `PROJECT_BRIEF.md`, `AGENTS.md`, and the existing repository. Produce the smallest coherent implementation plan that satisfies the acceptance criteria. Do not code yet.
+## Setup and commands
 
-6. Switch to **Builder** when the plan is sound.
-7. Run `./scripts/check.sh` before considering the task complete.
-8. Use **Reviewer** and **Operations** as independent second opinions.
-
-## Repository layout
-
-```text
-.
-├── AGENTS.md
-├── PROJECT_BRIEF.md
-├── .github/
-│   ├── agents/
-│   │   ├── architect.agent.md
-│   │   ├── builder.agent.md
-│   │   ├── operations.agent.md
-│   │   └── reviewer.agent.md
-│   ├── instructions/
-│   │   └── python.instructions.md
-│   ├── skills/
-│   │   ├── problem-to-solution/SKILL.md
-│   │   └── production-review/SKILL.md
-│   └── hooks/
-│       ├── README.md
-│       └── audit.json.example
-├── docs/
-│   ├── acceptance-criteria.md
-│   ├── architecture.md
-│   ├── decision-log.md
-│   └── runbook.md
-├── src/business_app/
-├── tests/
-├── scripts/
-└── infra/
-```
-
-## Local setup
-
-Requires Python 3.12+.
+Python 3.12, Git, and network access for bootstrap and vulnerability audit are required.
 
 ```bash
 ./scripts/bootstrap.sh
-source .venv/bin/activate
 ./scripts/check.sh
+.venv/bin/python scripts/gates.py --production
 ```
 
-On Windows PowerShell:
+Windows PowerShell:
 
 ```powershell
 py -3.12 -m venv .venv
-.venv\Scripts\Activate.ps1
-python -m pip install -e ".[dev]"
-python -m pytest
-python -m ruff check .
-python -m mypy src
+.venv\Scripts\python -m pip install --require-hashes -r requirements-dev.lock
+.venv\Scripts\python -m pip install --no-deps --no-build-isolation -e .
+.venv\Scripts\python scripts/check.py
+.venv\Scripts\python scripts/gates.py --production
 ```
 
-## Agent workflow
+| Command | Evidence / gate |
+| --- | --- |
+| `make check` | Spec traceability, secret scan, format, lint, types, tests, coverage, Bandit, dependency audit |
+| `make test` | Behavioral regression tests |
+| `make production` | All checks plus owner, security, SLO, rollback, recovery, and stakeholder evidence |
+| `make lock` | Deliberate dependency refresh; review and rerun gates |
 
-### 1. Architect
+CI runs the same `scripts/check.py` command on pushes and pull requests. Versions and dependency hashes are locked; GitHub Actions are pinned to immutable commits. The vulnerability advisory database is live and can change results or be unavailable: the audit fails closed. CI records reports in `artifacts/`.
 
-Ask the agent to understand the business outcome, inspect the repository, identify ambiguity, choose boundaries, and propose acceptance tests.
+**The template passes engineering checks but intentionally fails production readiness.** Replace the sample business logic and supply real evidence; do not mark the starter production-ready.
 
-### 2. Builder
+## Repository guide
 
-Ask the agent to implement one vertical slice at a time and continuously run the test/check commands.
+- `AGENTS.md`: authority, workflow, and evidence requirements.
+- `specs/`: human-readable contract and machine-readable acceptance/test traceability.
+- `.github/agents/`: Architect, Builder, Verifier, Reviewer, Security, Operations.
+- `.github/workflows/quality.yml`: repeatable checks; no deployment credentials.
+- `docs/`: architecture, threat model, prototype feedback, verification, readiness, and recovery.
+- `scripts/`: cross-platform checks and fail-closed readiness validation.
+- `src/`, `tests/`: small pure-Python example and gate regression tests.
 
-### 3. Reviewer
+## Prototype to production
 
-Ask for a hostile review of the diff: correctness, race conditions, retries, security, resource usage, error handling, and weak tests.
+Discovery → experiment → stakeholder feedback → spec revision → hardening → verification → release decision. See `docs/prototype-to-production.md` for exit criteria and `docs/verification.md` for evidence requirements.
 
-### 4. Operations
+Prototype shortcuts must be recorded with owner, risk, and expiry. Use synthetic data. External side effects require bounded retries, timeouts, idempotency, and recovery tests where relevant. A human owns the business outcome and release decision.
 
-Ask how the system fails in production, how you will know, how you recover, and what should be in the runbook.
+## GitHub setup for projects created from this template
 
-## Important safety rule
+Keep `main` as default. Configure a branch ruleset requiring the **Quality gates** status check and review; workflow files alone do not enforce branch protection. Add a protected deployment environment with a human release approver when you introduce deployment. Never give untrusted pull requests production secrets. This template does not provision infrastructure or automatically deploy.
 
-The repository instructions prohibit destructive production/cloud actions unless the human explicitly authorizes them. Keep that rule even when you customize this template.
+## Dependency maintenance
 
-## VS Code agent customization
+Edit `requirements-dev.in`, then run `make lock` in the development environment. Commit the generated hash lock with the change. Application runtime dependencies must also be added to `requirements-runtime.in`, reflected in `pyproject.toml`, locked, and audited. An empty runtime file is correct for this standard-library-only example.
 
-VS Code discovers workspace custom agents from `.github/agents` and project skills from `.github/skills`. `AGENTS.md` is a cross-agent project instruction format supported by VS Code/Copilot and OpenAI Codex-compatible workflows.
+## Upgrade notes
 
-Hooks differ by harness. An example is included but intentionally disabled as `audit.json.example`; read `.github/hooks/README.md` before enabling it.
+v2 adds executable specs, immutable tool inputs, evidence-oriented agents, CI, security gates, production readiness, and feedback-driven promotion. Existing domain code stays small. Hooks remain opt-in; see `.github/hooks/README.md`.
