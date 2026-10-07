@@ -2,7 +2,7 @@
 
 Turn an ambiguous business problem into a verified software solution using AI coding agents and human engineering judgment.
 
-Inspired by the business-facing engineering principles discussed in the NextEra role: clarify outcomes, prototype with stakeholders, anticipate edge cases, and own secure, operable delivery. This is an independent template, not a NextEra product or endorsement.
+Inspired by business-facing engineering principles: clarify outcomes, prototype with stakeholders, anticipate edge cases, and own secure, operable delivery.
 
 ## Start here
 
