@@ -6,6 +6,10 @@ Translate `PROJECT_BRIEF.md` into measurable business value and the smallest sec
 
 AI output is a proposal until independently verified. Never invent tests, benchmark results, citations, execution output, or stakeholder approval. State what you executed and what remains unverified. Do not delegate to other agents unless requested; review roles can be sequential passes.
 
+## Lightweight task intake and parallel work
+
+Use `TASKS.md` as an optional inbox for small requests and ideas. Capturing an item does not authorize starting it or delegating it. Two independent tasks at a time is a **suggested work-in-progress limit**, not a CI-enforced scheduler; serialize overlapping changes or work involving shared systems. Preserve the primary project priority, make dependencies and blockers visible, and never assume a Git branch isolates shared infrastructure. The existing human-approval and verification rules still apply. Do not spawn agents unless requested.
+
 ## Before implementation
 
 1. Read the brief, `specs/`, `docs/acceptance-criteria.md`, and relevant implementation/tests.
