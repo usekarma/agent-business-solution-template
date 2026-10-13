@@ -50,6 +50,7 @@ CI runs the same `scripts/check.py` command on pushes and pull requests. Version
 ## Repository guide
 
 - `AGENTS.md`: authority, workflow, and evidence requirements.
+- `TASKS.md`: optional Post-it-style inbox and lightweight guidance for independent parallel tasks (no scheduler).
 - `specs/`: human-readable contract and machine-readable acceptance/test traceability.
 - `.github/agents/`: Architect, Builder, Verifier, Reviewer, Security, Operations.
 - `.github/workflows/quality.yml`: repeatable checks; no deployment credentials.
